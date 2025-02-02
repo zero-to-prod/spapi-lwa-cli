@@ -33,6 +33,8 @@ class ClientCredentialsCommand extends Command
 
         if ($response['info']['http_code'] !== 200) {
             $output->writeln(json_encode($response, JSON_PRETTY_PRINT));
+
+            return Command::SUCCESS;
         }
 
         if ($Options->access_token || (!$Options->scope && !$Options->token_type && !$Options->expires_in)) {
