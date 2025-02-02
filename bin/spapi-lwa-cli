@@ -1,0 +1,13 @@
+#!/usr/bin/env php
+<?php
+
+use Symfony\Component\Console\Application;
+use Zerotoprod\SpapiLwaCli\SpapiLwaCli;
+
+require getcwd().'/vendor/autoload.php';
+
+$Application = (new Application());
+
+SpapiLwaCli::register($Application);
+
+$Application->run();
