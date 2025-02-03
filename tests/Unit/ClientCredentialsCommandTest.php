@@ -19,7 +19,6 @@ class ClientCredentialsCommandTest extends TestCase
         $CommandTester = new CommandTester($Command);
 
         $CommandTester->execute([
-            ClientCredentialsArguments::url => ClientCredentialsArguments::url,
             ClientCredentialsArguments::scope => ClientCredentialsArguments::scope,
             ClientCredentialsArguments::client_id => ClientCredentialsArguments::client_id,
             ClientCredentialsArguments::client_secret => ClientCredentialsArguments::client_secret
