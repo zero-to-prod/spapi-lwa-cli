@@ -8,9 +8,6 @@ class ClientCredentialsArguments
 {
     use DataModel;
 
-    public const url = 'url';
-    public string $url;
-
     public const scope = 'scope';
     public string $scope;
 
