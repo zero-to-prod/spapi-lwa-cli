@@ -11,8 +11,8 @@ class ClientCredentialsOptions
     public const user_agent = 'user_agent';
     public ?string $user_agent = null;
 
-    public const access_token = 'access_token';
-    public bool $access_token = false;
+    public const response = 'response';
+    public bool $response = false;
     public const scope = 'scope';
     public bool $scope = false;
 
