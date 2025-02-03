@@ -24,7 +24,7 @@ class RefreshTokenCommand extends Command
         $Options = RefreshTokenOptions::from($input->getOptions());
 
         $response = SpapiLwa::refreshToken(
-            $Args->url,
+            'https://api.amazon.com/auth/o2/token',
             $Args->refresh_token,
             $Args->client_id,
             $Args->client_secret,
@@ -37,8 +37,8 @@ class RefreshTokenCommand extends Command
             return Command::SUCCESS;
         }
 
-        if ($Options->access_token || (!$Options->refresh_token && !$Options->token_type && !$Options->expires_in)) {
-            $output->writeln($response['response']['access_token']);
+        if ($Options->response) {
+            $output->writeln(json_encode($response, JSON_PRETTY_PRINT));
 
             return Command::SUCCESS;
         }
@@ -61,24 +61,18 @@ class RefreshTokenCommand extends Command
             return Command::SUCCESS;
         }
 
-        $output->writeln(
-            json_encode(
-                $response,
-                JSON_PRETTY_PRINT
-            )
-        );
+        $output->writeln($response['response']['access_token']);
 
         return Command::SUCCESS;
     }
 
     public function configure(): void
     {
-        $this->addArgument(RefreshTokenArguments::url, InputArgument::REQUIRED);
-        $this->addArgument(RefreshTokenArguments::refresh_token, InputArgument::REQUIRED);
-        $this->addArgument(RefreshTokenArguments::client_id, InputArgument::REQUIRED);
-        $this->addArgument(RefreshTokenArguments::client_secret, InputArgument::REQUIRED);
+        $this->addArgument(RefreshTokenArguments::refresh_token, InputArgument::REQUIRED, 'The LWA refresh token');
+        $this->addArgument(RefreshTokenArguments::client_id, InputArgument::REQUIRED, 'Get this value when you register your application');
+        $this->addArgument(RefreshTokenArguments::client_secret, InputArgument::REQUIRED, 'Get this value when you register your application');
         $this->addOption(RefreshTokenOptions::user_agent, mode: InputOption::VALUE_OPTIONAL, description: 'User Agent');
-        $this->addOption(RefreshTokenOptions::access_token, mode: InputOption::VALUE_NONE, description: 'Returns the access_token');
+        $this->addOption(RefreshTokenOptions::response, mode: InputOption::VALUE_NONE, description: 'Returns the full response');
         $this->addOption(RefreshTokenOptions::refresh_token, mode: InputOption::VALUE_NONE, description: 'Returns the refresh_token');
         $this->addOption(RefreshTokenOptions::token_type, mode: InputOption::VALUE_NONE, description: 'Returns the token_type');
         $this->addOption(RefreshTokenOptions::expires_in, mode: InputOption::VALUE_NONE, description: 'Returns expires_in');
