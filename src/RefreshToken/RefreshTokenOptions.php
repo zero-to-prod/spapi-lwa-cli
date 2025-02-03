@@ -11,8 +11,8 @@ class RefreshTokenOptions
     public const user_agent = 'user_agent';
     public ?string $user_agent = null;
 
-    public const access_token = 'access_token';
-    public bool $access_token = false;
+    public const response = 'response';
+    public bool $response = false;
     public const refresh_token = 'refresh_token';
     public bool $refresh_token = false;
 
