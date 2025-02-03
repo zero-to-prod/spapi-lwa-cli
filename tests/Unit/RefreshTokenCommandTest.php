@@ -19,7 +19,6 @@ class RefreshTokenCommandTest extends TestCase
         $CommandTester = new CommandTester($Command);
 
         $CommandTester->execute([
-            RefreshTokenArguments::url => RefreshTokenArguments::url,
             RefreshTokenArguments::refresh_token => RefreshTokenArguments::refresh_token,
             RefreshTokenArguments::client_id => RefreshTokenArguments::client_id,
             RefreshTokenArguments::client_secret => RefreshTokenArguments::client_secret
