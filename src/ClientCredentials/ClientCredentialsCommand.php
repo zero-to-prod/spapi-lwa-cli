@@ -24,7 +24,7 @@ class ClientCredentialsCommand extends Command
         $Options = ClientCredentialsOptions::from($input->getOptions());
 
         $response = SpapiLwa::clientCredentials(
-            $Args->url,
+            'https://api.amazon.com/auth/o2/token',
             $Args->scope,
             $Args->client_id,
             $Args->client_secret,
@@ -37,8 +37,8 @@ class ClientCredentialsCommand extends Command
             return Command::SUCCESS;
         }
 
-        if ($Options->access_token || (!$Options->scope && !$Options->token_type && !$Options->expires_in)) {
-            $output->writeln($response['response']['access_token']);
+        if ($Options->response) {
+            $output->writeln(json_encode($response, JSON_PRETTY_PRINT));
 
             return Command::SUCCESS;
         }
@@ -61,24 +61,18 @@ class ClientCredentialsCommand extends Command
             return Command::SUCCESS;
         }
 
-        $output->writeln(
-            json_encode(
-                $response,
-                JSON_PRETTY_PRINT
-            )
-        );
+        $output->writeln($response['response']['access_token']);
 
         return Command::SUCCESS;
     }
 
     public function configure(): void
     {
-        $this->addArgument(ClientCredentialsArguments::url, InputArgument::REQUIRED);
-        $this->addArgument(ClientCredentialsArguments::scope, InputArgument::REQUIRED);
-        $this->addArgument(ClientCredentialsArguments::client_id, InputArgument::REQUIRED);
-        $this->addArgument(ClientCredentialsArguments::client_secret, InputArgument::REQUIRED);
+        $this->addArgument(ClientCredentialsArguments::scope, InputArgument::REQUIRED, 'The scope of the LWA authorization grant');
+        $this->addArgument(ClientCredentialsArguments::client_id, InputArgument::REQUIRED, 'Get this value when you register your application');
+        $this->addArgument(ClientCredentialsArguments::client_secret, InputArgument::REQUIRED, 'Get this value when you register your application');
         $this->addOption(ClientCredentialsOptions::user_agent, mode: InputOption::VALUE_OPTIONAL, description: 'User Agent');
-        $this->addOption(ClientCredentialsOptions::access_token, mode: InputOption::VALUE_NONE, description: 'Returns the access_token');
+        $this->addOption(ClientCredentialsOptions::response, mode: InputOption::VALUE_NONE, description: 'Returns the access_token');
         $this->addOption(ClientCredentialsOptions::scope, mode: InputOption::VALUE_NONE, description: 'Returns the scope');
         $this->addOption(ClientCredentialsOptions::token_type, mode: InputOption::VALUE_NONE, description: 'Returns the token_type');
         $this->addOption(ClientCredentialsOptions::expires_in, mode: InputOption::VALUE_NONE, description: 'Returns expires_in');
