@@ -8,9 +8,6 @@ class RefreshTokenArguments
 {
     use DataModel;
 
-    public const url = 'url';
-    public string $url;
-
     public const refresh_token = 'refresh_token';
     public string $refresh_token;
 
