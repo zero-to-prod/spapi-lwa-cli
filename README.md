@@ -5,6 +5,7 @@
 [![Repo](https://img.shields.io/badge/github-gray?logo=github)](https://github.com/zero-to-prod/spapi-lwa-cli)
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/zero-to-prod/spapi-lwa-cli/test.yml?label=test)](https://github.com/zero-to-prod/spapi-lwa-cli/actions)
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/zero-to-prod/spapi-lwa-cli/build_docker_image.yml?label=build_docker_image)](https://github.com/zero-to-prod/spapi-lwa-cli/actions)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/zero-to-prod/spapi-lwa-cli/backwards_compatibility.yml?label=backwards_compatibility)](https://github.com/zero-to-prod/spapi-lwa-cli/actions)
 [![Packagist Downloads](https://img.shields.io/packagist/dt/zero-to-prod/spapi-lwa-cli?color=blue)](https://packagist.org/packages/zero-to-prod/spapi-lwa-cli/stats)
 [![php](https://img.shields.io/packagist/php-v/zero-to-prod/spapi-lwa-cli.svg?color=purple)](https://packagist.org/packages/zero-to-prod/spapi-lwa-cli/stats)
 [![Packagist Version](https://img.shields.io/packagist/v/zero-to-prod/spapi-lwa-cli?color=f28d1a)](https://packagist.org/packages/zero-to-prod/spapi-lwa-cli)
