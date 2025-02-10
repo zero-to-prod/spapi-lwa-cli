@@ -23,13 +23,11 @@ class RefreshTokenCommand extends Command
         $Args = RefreshTokenArguments::from($input->getArguments());
         $Options = RefreshTokenOptions::from($input->getOptions());
 
-        $response = SpapiLwa::refreshToken(
-            'https://api.amazon.com/auth/o2/token',
-            $Args->refresh_token,
+        $response = SpapiLwa::from(
             $Args->client_id,
             $Args->client_secret,
-            $Options->user_agent
-        );
+            user_agent: $Options->user_agent
+        )->refreshToken($Args->refresh_token);
 
         if ($response['info']['http_code'] !== 200) {
             $output->writeln(json_encode($response, JSON_PRETTY_PRINT));
