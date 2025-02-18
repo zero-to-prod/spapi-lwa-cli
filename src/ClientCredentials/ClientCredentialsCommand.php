@@ -10,12 +10,18 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Zerotoprod\SpapiLwa\SpapiLwa;
 
+/**
+ * @link https://github.com/zero-to-prod/spapi-lwa-cli
+ */
 #[AsCommand(
     name: ClientCredentialsCommand::signature,
     description: 'Login With Amazon with client credentials.'
 )]
 class ClientCredentialsCommand extends Command
 {
+    /**
+     * @link https://github.com/zero-to-prod/spapi-lwa-cli
+     */
     public const signature = 'spapi-lwa-cli:client-credentials';
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -64,6 +70,9 @@ class ClientCredentialsCommand extends Command
         return Command::SUCCESS;
     }
 
+    /**
+     * @link https://github.com/zero-to-prod/spapi-lwa-cli
+     */
     public function configure(): void
     {
         $this->addArgument(ClientCredentialsArguments::scope, InputArgument::REQUIRED, 'The scope of the LWA authorization grant');

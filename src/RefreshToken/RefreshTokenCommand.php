@@ -10,12 +10,18 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Zerotoprod\SpapiLwa\SpapiLwa;
 
+/**
+ * @link https://github.com/zero-to-prod/spapi-lwa-cli
+ */
 #[AsCommand(
     name: RefreshTokenCommand::signature,
     description: 'Login With Amazon with a refresh_token.'
 )]
 class RefreshTokenCommand extends Command
 {
+    /**
+     * @link https://github.com/zero-to-prod/spapi-lwa-cli
+     */
     public const signature = 'spapi-lwa-cli:refresh-token';
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -64,6 +70,9 @@ class RefreshTokenCommand extends Command
         return Command::SUCCESS;
     }
 
+    /**
+     * @link https://github.com/zero-to-prod/spapi-lwa-cli
+     */
     public function configure(): void
     {
         $this->addArgument(RefreshTokenArguments::refresh_token, InputArgument::REQUIRED, 'The LWA refresh token');
