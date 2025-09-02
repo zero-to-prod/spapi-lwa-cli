@@ -18,7 +18,13 @@
 - [Introduction](#introduction)
 - [Requirements](#requirements)
 - [Installation](#installation)
+- [Documentation Publishing](#documentation-publishing)
+    - [Automatic Documentation Publishing](#automatic-documentation-publishing)
 - [Usage](#usage)
+  - [Available Commands](#available-commands)
+    - [`spapi-lwa-cli:refresh-token`](#spapi-lwa-clirefresh-token)
+    - [`spapi-lwa-cli:client-credentials`](#spapi-lwa-cliclient-credentials)
+    - [`spapi-lwa-cli:src`](#spapi-lwa-clisrc)
 - [Docker Image](#docker-image)
 - [Local Development](./LOCAL_DEVELOPMENT.md)
 - [Image Development](./IMAGE_DEVELOPMENT.md)
@@ -40,7 +46,40 @@ Install `Zerotoprod\SpapiLwaCli` via [Composer](https://getcomposer.org/):
 composer require zero-to-prod/spapi-lwa-cli
 ```
 
-This will add the package to your project’s dependencies and create an autoloader entry for it.
+This will add the package to your project's dependencies and create an autoloader entry for it.
+
+## Documentation Publishing
+
+You can publish this README to your local documentation directory.
+
+This can be useful for providing documentation for AI agents.
+
+This can be done using the included script:
+
+```bash
+# Publish to default location (./docs/zero-to-prod/spapi-lwa-cli)
+vendor/bin/zero-to-prod-spapi-lwa-cli
+
+# Publish to custom directory
+vendor/bin/zero-to-prod-spapi-lwa-cli /path/to/your/docs
+```
+
+### Automatic Documentation Publishing
+
+You can automatically publish documentation by adding the following to your `composer.json`:
+
+```json
+{
+    "scripts": {
+        "post-install-cmd": [
+            "zero-to-prod-spapi-lwa-cli"
+        ],
+        "post-update-cmd": [
+            "zero-to-prod-spapi-lwa-cli"
+        ]
+    }
+}
+```
 
 ## Usage
 
@@ -48,6 +87,149 @@ Run this command to see the available commands:
 
 ```shell
 vendor/bin/spapi-lwa-cli list
+```
+
+### Available Commands
+
+#### `spapi-lwa-cli:refresh-token`
+
+**Description**: Login With Amazon with a refresh_token.
+
+**Usage**:
+```bash
+vendor/bin/spapi-lwa-cli spapi-lwa-cli:refresh-token [options] <refresh_token> <client_id> <client_secret>
+```
+
+**Arguments**:
+- `refresh_token` (required): The LWA refresh token
+- `client_id` (required): Get this value when you register your application
+- `client_secret` (required): Get this value when you register your application
+
+**Options**:
+- `--user_agent[=USER_AGENT]`: User Agent
+- `--response`: Returns the full response
+- `--refresh_token`: Returns the refresh_token
+- `--token_type`: Returns the token_type
+- `--expires_in`: Returns expires_in
+
+**Examples**:
+```bash
+# Get access token (default behavior)
+vendor/bin/spapi-lwa-cli spapi-lwa-cli:refresh-token "your-refresh-token" "your-client-id" "your-client-secret"
+
+# Get the full response
+vendor/bin/spapi-lwa-cli spapi-lwa-cli:refresh-token "your-refresh-token" "your-client-id" "your-client-secret" --response
+
+# Get only the token type
+vendor/bin/spapi-lwa-cli spapi-lwa-cli:refresh-token "your-refresh-token" "your-client-id" "your-client-secret" --token_type
+
+# With custom user agent
+vendor/bin/spapi-lwa-cli spapi-lwa-cli:refresh-token "your-refresh-token" "your-client-id" "your-client-secret" --user_agent="MyApp/1.0"
+```
+
+**Sample Output** (access token):
+```
+Atzr|IwEBIAxHQiJEuOjl-123456789abcdef...
+```
+
+**Sample Output** (full response with `--response`):
+```json
+{
+    "response": {
+        "access_token": "Atzr|IwEBIAxHQiJEuOjl-123456789abcdef...",
+        "token_type": "bearer",
+        "expires_in": 3600,
+        "refresh_token": "Atzr|IwEBIA..."
+    },
+    "info": {
+        "url": "https://api.amazon.com/auth/o2/token",
+        "content_type": "application/json; charset=utf-8",
+        "http_code": 200,
+        "total_time": 0.234567
+    }
+}
+```
+
+#### `spapi-lwa-cli:client-credentials`
+
+**Description**: Login With Amazon with client credentials.
+
+**Usage**:
+```bash
+vendor/bin/spapi-lwa-cli spapi-lwa-cli:client-credentials [options] <scope> <client_id> <client_secret>
+```
+
+**Arguments**:
+- `scope` (required): The scope of the LWA authorization grant
+- `client_id` (required): Get this value when you register your application
+- `client_secret` (required): Get this value when you register your application
+
+**Options**:
+- `--user_agent[=USER_AGENT]`: User Agent
+- `--response`: Returns the full response
+- `--scope`: Returns the scope
+- `--token_type`: Returns the token_type
+- `--expires_in`: Returns expires_in
+
+**Examples**:
+```bash
+# Get access token (default behavior)
+vendor/bin/spapi-lwa-cli spapi-lwa-cli:client-credentials "sellingpartnerapi::notifications" "your-client-id" "your-client-secret"
+
+# Get the full response
+vendor/bin/spapi-lwa-cli spapi-lwa-cli:client-credentials "sellingpartnerapi::notifications" "your-client-id" "your-client-secret" --response
+
+# Get only the scope
+vendor/bin/spapi-lwa-cli spapi-lwa-cli:client-credentials "sellingpartnerapi::notifications" "your-client-id" "your-client-secret" --scope
+
+# With custom user agent
+vendor/bin/spapi-lwa-cli spapi-lwa-cli:client-credentials "sellingpartnerapi::notifications" "your-client-id" "your-client-secret" --user_agent="MyApp/1.0"
+```
+
+**Sample Output** (access token):
+```
+Atza|IwEBIAxHQiJEuOjl-987654321fedcba...
+```
+
+**Sample Output** (full response with `--response`):
+```json
+{
+    "response": {
+        "access_token": "Atza|IwEBIAxHQiJEuOjl-987654321fedcba...",
+        "scope": "sellingpartnerapi::notifications",
+        "token_type": "bearer",
+        "expires_in": 3600
+    },
+    "info": {
+        "url": "https://api.amazon.com/auth/o2/token",
+        "content_type": "application/json; charset=utf-8",
+        "http_code": 200,
+        "total_time": 0.567890
+    }
+}
+```
+
+#### `spapi-lwa-cli:src`
+
+**Description**: Project source link
+
+**Usage**:
+```bash
+vendor/bin/spapi-lwa-cli spapi-lwa-cli:src
+```
+
+**Arguments**: None
+
+**Options**: None
+
+**Example**:
+```bash
+vendor/bin/spapi-lwa-cli spapi-lwa-cli:src
+```
+
+**Sample Output**:
+```
+https://github.com/zero-to-prod/spapi-lwa-cli
 ```
 
 ## Docker Image

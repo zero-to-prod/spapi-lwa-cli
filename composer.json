@@ -46,7 +46,8 @@
     }
   },
   "bin": [
-    "bin/spapi-lwa-cli"
+    "bin/spapi-lwa-cli",
+    "bin/zero-to-prod-spapi-lwa-cli"
   ],
   "require-dev": {
     "phpunit/phpunit": "<12.0"
